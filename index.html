@@ -558,6 +558,20 @@
         left: 20px;
       }
     }
+    
+    /* Top-right corner style */
+    #clock {
+      position: fixed;
+      top: 10px;
+      right: 50px;
+      font-size: 10px;
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.); /* हल्का background */
+      padding: 5px 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+      font-family: 'Arial', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -567,6 +581,7 @@
   <div class="floating-photo">
     <img id="floatingImage" src="" alt="Floating Image">
   </div>
+  <div id="clock"></div> <!-- Clock will appear here -->
 
   <!-- Audio Player -->
   <div class="audio-player">
@@ -817,6 +832,40 @@
         avatarContainer.style.transform = `translateY(${scrolled * 0.1}px)`;
       }
     });
+    
+    function toNepaliNumber(num) {
+      const nepaliDigits = ['0','1','2','3','4','5','6','7','8','9'];
+      return num.toString().split('').map(d => nepaliDigits[d]).join('');
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const nepalTime = new Date(utc + (5.75 * 3600000));
+
+      let hours = nepalTime.getHours();
+      let minutes = nepalTime.getMinutes();
+      let seconds = nepalTime.getSeconds();
+
+      const ampm = hours >= 12 ? ' PM' : ' AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      const time =
+        toNepaliNumber(hours) + " : " +
+        toNepaliNumber(minutes) + " : " +
+        toNepaliNumber(seconds) +
+        ampm;
+
+      document.getElementById("clock").innerHTML = time;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
