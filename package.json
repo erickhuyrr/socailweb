@@ -1,7 +1,6 @@
 {
-  "name": "portfolio",
+  "name": "asmit-portfolio",
   "version": "1.0.0",
-  "description": "Asmit Portfolio",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
