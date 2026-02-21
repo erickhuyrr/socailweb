@@ -29,6 +29,145 @@ body{
   line-height:1.4;
 }
 
+/* ========= MUSIC POPUP ========= */
+.music-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  animation:fadeInOverlay .4s ease;
+}
+@keyframes fadeInOverlay{from{opacity:0;}to{opacity:1;}}
+
+.music-popup{
+  background:rgba(13,27,46,0.97);
+  border:1px solid rgba(56,189,248,0.25);
+  border-radius:24px;
+  padding:34px 28px 28px;
+  text-align:center;
+  max-width:300px;
+  width:88%;
+  box-shadow:0 0 60px rgba(56,189,248,0.15),0 20px 60px rgba(0,0,0,0.6);
+  animation:popupIn .45s cubic-bezier(.34,1.56,.64,1) forwards;
+  position:relative;overflow:hidden;
+}
+@keyframes popupIn{
+  from{opacity:0;transform:scale(0.8) translateY(20px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
+
+.music-popup::before{
+  content:"";position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,0.12),transparent 70%);
+  pointer-events:none;
+}
+
+.music-popup-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(56,189,248,0.15),rgba(147,51,234,0.15));
+  border:1px solid rgba(56,189,248,0.3);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;
+  font-size:26px;color:var(--sky);
+  animation:iconPulse 2s ease-in-out infinite;
+}
+@keyframes iconPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(56,189,248,0.3);}
+  50%{box-shadow:0 0 0 12px rgba(56,189,248,0);}
+}
+
+.music-popup h3{
+  font-size:17px;font-weight:800;margin-bottom:6px;
+  background:linear-gradient(135deg,#fff,var(--sky));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.music-popup p{
+  font-size:11px;color:rgba(255,255,255,0.5);
+  font-family:'Space Mono',monospace;
+  margin-bottom:24px;line-height:1.6;
+}
+
+.music-popup-btns{
+  display:flex;gap:10px;justify-content:center;
+}
+
+.btn-music-yes,.btn-music-no{
+  flex:1;padding:11px 0;border-radius:12px;
+  font-size:13px;font-weight:700;font-family:'Syne',sans-serif;
+  border:none;cursor:pointer;transition:.25s;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+
+.btn-music-yes{
+  background:linear-gradient(135deg,var(--sky),var(--purple));
+  color:#fff;
+  box-shadow:0 4px 18px rgba(56,189,248,0.3);
+}
+.btn-music-yes:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(56,189,248,0.45);}
+.btn-music-yes:active{transform:scale(0.97);}
+
+.btn-music-no{
+  background:rgba(255,255,255,0.05);
+  color:rgba(255,255,255,0.5);
+  border:1px solid rgba(255,255,255,0.1);
+}
+.btn-music-no:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.75);}
+.btn-music-no:active{transform:scale(0.97);}
+
+/* Music player bar (bottom right) */
+.music-bar{
+  position:fixed;bottom:18px;right:14px;
+  z-index:989;
+  display:none;
+  align-items:center;gap:9px;
+  background:rgba(13,27,46,0.88);
+  border:1px solid rgba(56,189,248,0.2);
+  border-radius:50px;
+  padding:7px 14px 7px 10px;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+  cursor:pointer;
+  transition:.3s;
+}
+.music-bar:hover{border-color:rgba(56,189,248,0.45);background:rgba(13,27,46,0.97);}
+.music-bar.visible{display:flex;}
+
+.music-bar-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--sky),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#fff;flex-shrink:0;
+}
+
+.music-bars-anim{
+  display:flex;align-items:flex-end;gap:2px;height:16px;
+}
+.music-bars-anim span{
+  width:3px;border-radius:2px;
+  background:linear-gradient(to top,var(--sky),var(--purple));
+  animation:barBounce .8s ease-in-out infinite;
+}
+.music-bars-anim span:nth-child(1){height:6px;animation-delay:0s;}
+.music-bars-anim span:nth-child(2){height:12px;animation-delay:.15s;}
+.music-bars-anim span:nth-child(3){height:9px;animation-delay:.3s;}
+.music-bars-anim span:nth-child(4){height:14px;animation-delay:.1s;}
+.music-bars-anim.paused span{animation-play-state:paused;}
+
+@keyframes barBounce{
+  0%,100%{transform:scaleY(0.4);}
+  50%{transform:scaleY(1);}
+}
+
+.music-bar-label{
+  font-size:10px;font-family:'Space Mono',monospace;
+  color:rgba(255,255,255,0.6);white-space:nowrap;
+}
+
 /* ========= NAVBAR ========= */
 .navbar{
   position:fixed;top:0;width:100%;height:58px;
@@ -486,6 +625,39 @@ h2{
 </head>
 <body>
 
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MUSIC POPUP -->
+<div class="music-overlay" id="musicOverlay">
+  <div class="music-popup">
+    <div class="music-popup-icon">
+      <i class="fas fa-music"></i>
+    </div>
+    <h3>Background Music</h3>
+    <p>Would you like to enjoy some<br>background music while browsing?</p>
+    <div class="music-popup-btns">
+      <button class="btn-music-yes" onclick="startMusic()">
+        <i class="fas fa-play"></i> Yes, Play!
+      </button>
+      <button class="btn-music-no" onclick="closePopup()">
+        <i class="fas fa-times"></i> No
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC PLAYER BAR (bottom right) -->
+<div class="music-bar" id="musicBar" onclick="toggleMusic()">
+  <div class="music-bar-icon"><i class="fas fa-music"></i></div>
+  <div class="music-bars-anim" id="musicBarsAnim">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <span class="music-bar-label" id="musicBarLabel">Playing</span>
+</div>
+
 <!-- NAVBAR -->
 <div class="navbar">
   <div class="logo">ASMIT ADK</div>
@@ -546,6 +718,7 @@ h2{
 
   <div class="banner-particles" id="particles"></div>
   <div class="banner-glass"></div>
+  <div class="banner-title">ASMIT ADK</div>
 </div>
 
 <!-- PROFILE -->
@@ -709,7 +882,47 @@ async function loadQuote(){
 }
 loadQuote();
 
-// Draggable quote widget — works on mouse + touch
+// ========= MUSIC =========
+const bgMusic = document.getElementById("bgMusic");
+const musicOverlay = document.getElementById("musicOverlay");
+const musicBar = document.getElementById("musicBar");
+const musicBarsAnim = document.getElementById("musicBarsAnim");
+const musicBarLabel = document.getElementById("musicBarLabel");
+let isPlaying = false;
+
+bgMusic.volume = 0.35;
+
+function startMusic(){
+  musicOverlay.style.animation = "fadeInOverlay .3s ease reverse forwards";
+  setTimeout(()=>{ musicOverlay.style.display="none"; },300);
+  bgMusic.play().then(()=>{
+    isPlaying = true;
+    musicBar.classList.add("visible");
+    musicBarsAnim.classList.remove("paused");
+    musicBarLabel.textContent = "Playing";
+  }).catch(()=>{});
+}
+
+function closePopup(){
+  musicOverlay.style.animation = "fadeInOverlay .3s ease reverse forwards";
+  setTimeout(()=>{ musicOverlay.style.display="none"; },300);
+}
+
+function toggleMusic(){
+  if(isPlaying){
+    bgMusic.pause();
+    isPlaying = false;
+    musicBarsAnim.classList.add("paused");
+    musicBarLabel.textContent = "Paused";
+  } else {
+    bgMusic.play();
+    isPlaying = true;
+    musicBarsAnim.classList.remove("paused");
+    musicBarLabel.textContent = "Playing";
+  }
+}
+
+// ========= DRAG QUOTE =========
 (function(){
   const widget = document.getElementById("quoteWidget");
   let dragging = false, startX, startY, initLeft, initTop;
